@@ -1,0 +1,78 @@
+# Курс:
+
+## Теория баз данных/
+
+### Тема: Многотабличные базы данных.
+
+Запросы:
+
+1. Вывести все возможные пары строк преподавателей и групп. 
+
+SELECT Teachers.*, `Groups`.* FROM Teachers, Lectures, GroupsLectures, `Groups` WHERE Teachers.Id = Lectures.TeacherId AND Lectures.Id = GroupsLectures.LectureId AND GroupsLectures.GroupId = `Groups`.Id;
+
+![текст](https://sun9-6.userapi.com/impg/Covmz2B4xgntiBF96OxKD7AWx8F5nLMJH0CNfA/duU39D6OtfE.jpg?size=1920x1080&quality=95&sign=14fb3533bbf6809e5c795601288e355b&type=album)
+
+2. Вывести названия факультетов, фонд финансирования кафедр которых превышает фонд финансирования факультета.
+
+SELECT Faculties.Name FROM Faculties, Departments WHERE Faculties.Id = Departments.FacultyId AND Departments.Financing > Faculties.Financing;
+
+SELECT DISTINCT Faculties.Name FROM Faculties, Departments WHERE Faculties.Id = Departments.FacultyId AND Departments.Financing > Faculties.Financing; - чтобы исключить повторы
+
+![текст](https://sun9-23.userapi.com/impg/ReHtWw_9Un3lcEfHtMl2bHYYiCMwjUnsAWOY_w/vjktJU38IAg.jpg?size=1920x1080&quality=95&sign=17dbef63264b525419e47056798b928a&type=album)
+
+3. Вывести фамилии кураторов групп и названия групп, которые они курируют.
+
+SELECT Curators.Surname, `Groups`.Name FROM Curators, GroupsCurators, `Groups` WHERE Curators.Id = GroupsCurators.CuratorId AND GroupsCurators.GroupId = `Groups`.Id;
+
+![текст](https://sun9-76.userapi.com/impg/kG-WsxtvQZnEkxC5LF_DyGV8rUQCt04irrHebg/BasP6qDto3c.jpg?size=1920x1080&quality=95&sign=509aecdc9a2d04ba1f8d939f231452d7&type=album)
+
+4. Вывести имена и фамилии преподавателей, которые читают лекции у группы “P107”.
+
+SELECT Teachers.Name, Teachers.Surname FROM Teachers, Lectures, GroupsLectures, `Groups` WHERE Teachers.Id = Lectures.TeacherId AND Lectures.Id = GroupsLectures.LectureId AND GroupsLectures.GroupId = `Groups`.Id AND `Groups`.Name = "P107";
+
+![текст](https://sun9-78.userapi.com/impg/4kXDbP_bl4llXPAxzTY4uHVqWOy_WRO7JMSezA/w1-WGkrwMgE.jpg?size=1920x1080&quality=95&sign=b6f90d7fff88cb95e4d19bcdea96d7c0&type=album)
+
+5. Вывести фамилии преподавателей и названия факультетов на которых они читают лекции. 
+
+SELECT Teachers.Surname, Faculties.Name FROM Teachers, Lectures, GroupsLectures, `Groups`, Departments, Faculties WHERE Teachers.Id = Lectures.TeacherId AND Lectures.Id = GroupsLectures.LectureId AND GroupsLectures.GroupId = `Groups`.Id AND `Groups`.DepartmentId = Departments.Id AND Departments.FacultyId = Faculties.Id;
+
+![текст](https://sun9-74.userapi.com/impg/OLDG06cI3wIjuH1mlWvHQQRt6F26Do37BT7xxA/gCYhuH3CYAk.jpg?size=1920x1080&quality=95&sign=c459e19c6f381e9caab28692d5fb3e45&type=album)
+
+6. Вывести названия кафедр и названия групп, которые к ним относятся. 
+
+SELECT Departments.Name, `Groups`.Name FROM Departments, `Groups` WHERE `Groups`.DepartmentId = Departments.Id;
+
+![текст](https://sun9-73.userapi.com/impg/TpahnP3hwqq40kMKgf9fbLaqXpzMpx8k51jRAw/-MFuzMgdLbQ.jpg?size=1920x1080&quality=95&sign=d986d2c85d9e3ab12011f4c890bc5a3d&type=album)
+
+7. Вывести названия дисциплин, которые читает преподаватель “Samantha Adams”. 
+
+SELECT Subjects.Name FROM Teachers, Lectures, Subjects WHERE Teachers.Id = Lectures.TeacherId AND Lectures.SubjectId = Subjects.Id AND Teachers.Name = "Samantha" AND Teachers.Surname = "Adams";
+
+SELECT DISTINCT Subjects.Name FROM Teachers, Lectures, Subjects WHERE Teachers.Id = Lectures.TeacherId AND Lectures.SubjectId = Subjects.Id AND Teachers.Name = "Samantha" AND Teachers.Surname = "Ad
+ams"; - чтобы исключить повторы
+
+![текст](https://sun9-43.userapi.com/impg/eA0Cm01u7SLik9w3KbRDiEEBMDeem-dI_n98bQ/tUrfPKb8-Sw.jpg?size=1920x1080&quality=95&sign=4ef374fe7182e8d75daeccecefb91ee4&type=album)
+
+8. Вывести названия кафедр, на которых читается дисциплина “Database Theory”. 
+
+SELECT Departments.Name FROM Departments, `Groups`, GroupsLectures, Lectures, Subjects WHERE Departments.Id = `Groups`.DepartmentId AND `Groups`.Id = GroupsLectures.GroupId AND GroupsLectures.LectureId = Lectures.Id AND Lectures.SubjectId = Subjects.Id AND Subjects.Name = "Database Theory";
+
+![текст](https://sun9-41.userapi.com/impg/A_aIlZfqZGTXgRwswtpFM_TWwt2HBS9XKJ8U8Q/9kX54rd3L2c.jpg?size=1920x1080&quality=95&sign=0c95e30da68ea3687d1c72340c444aac&type=album)
+
+9. Вывести названия групп, которые относятся к факультету “Computer Science”.
+
+SELECT `Groups`.Name FROM Faculties, Departments, `Groups` WHERE `Groups`.DepartmentId = Departments.Id AND Departments.FacultyId = Faculties.Id AND Faculties.Name = "Computer Science";
+
+![текст](https://sun9-64.userapi.com/impg/lzNB1vgr-CE5i291_mnAT0NDL0oivCu9COwmXA/AN5tQIBVqeM.jpg?size=1920x1080&quality=95&sign=3ea4547e8abe8e31c08d82cb2e3a39c6&type=album)
+
+10. Вывести названия групп 5-го курса, а также название факультетов, к которым они относятся.
+
+SELECT `Groups`.Name FROM Faculties, Departments, `Groups` WHERE `Groups`.DepartmentId = Departments.Id AND Departments.FacultyId = Faculties.Id AND `Groups`.Year = 5;
+
+![текст](https://sun9-15.userapi.com/impg/nKi5sRioIOGbqkeQCpJ-ohZvnotGZMmE_2ZGXw/Yqnfq0uorqo.jpg?size=1920x1080&quality=95&sign=dfd303d8191661b1d44ab2a231a9f50e&type=album)
+
+11. Вывести полные имена преподавателей и лекции, которые они читают (названия дисциплин и групп), причем отобрать только те лекции, которые читаются в аудитории “B103”.
+
+SELECT Teachers.Name, Teachers.Surname, Subjects.Name, `Groups`.Name FROM Teachers, Lectures, Subjects, GroupsLectures, `Groups` WHERE Teachers.Id = Lectures.TeacherId AND Lectures.SubjectId = Subjects.Id AND Lectures.Id = GroupsLectures.LectureId AND GroupsLectures.GroupId = `Groups`.Id AND Lectures.LectureRoom = "B103";
+
+![текст](https://sun9-61.userapi.com/impg/TLblG3FH1SJgG5RKOkd9koaGzBioqtz3Ou922A/OQjKUx7pc4U.jpg?size=1920x1080&quality=95&sign=27f5b89fd85fa4bba310aa590b5e24fe&type=album)
